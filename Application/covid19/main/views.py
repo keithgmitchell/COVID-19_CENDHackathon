@@ -10,6 +10,7 @@ import plotly.express as px
 import plotly.offline as opy
 import plotly.graph_objs as go
 import plotly.figure_factory as ff
+import folium
 
 # Create your views here.
 def main_page(request):
@@ -32,9 +33,20 @@ def GetGraph():
     div = opy.plot(fig, auto_open=False, output_type='div')
     return div
 
+
+def FoliumGraph():
+    coords = [(40.7831, -73.9712), (40.6782, -73.9412), (40.7282, -73.7949)]
+    map = folium.Map(location=[40.7118, -74.0131], zoom_start=12)
+    for coord in coords:
+        folium.Marker(location=[coord[0], coord[1]]).add_to(map)
+    return map._repr_html_()
+
+
 def generic_view(request):
     context = {}
     context['graph'] = GetGraph()
+    context['graph2'] = FoliumGraph()
+
     # print(context)
     return render(request, 'generic.html', context)
 
