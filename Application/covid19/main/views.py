@@ -72,13 +72,14 @@ def FinalGraphState(arg1, arg2, arg3):
 
     # choropleth
     folium.Choropleth(
+        nan_fill_color='white',
         geo_data=geojson_counties,
         name=arg2,
         data=pop_df,
         columns=[arg1, arg2],
         # see folium.Choropleth? for details on key_on
         key_on='feature.id',
-        fill_color='PuBu',
+        fill_color='GnBu',
         fill_opacity=0.5,
         line_opacity=0.5,
         legend_name=arg2,
@@ -87,13 +88,14 @@ def FinalGraphState(arg1, arg2, arg3):
 
 
     folium.Choropleth(
+        nan_fill_color='white',
         geo_data=geojson_counties,
         name=arg3,
         data=pop_df,
         columns=[arg1, arg3],
         # see folium.Choropleth? for details on key_on
         key_on='feature.id',
-        fill_color='YlOrRd',
+        fill_color='PuRd',
         fill_opacity=0.5,
         line_opacity=0.5,
         legend_name=arg3,
@@ -117,29 +119,38 @@ def FinalGraphCounty(arg1, arg2, arg3):
             i['id'] = i['properties']['NAME']
 
 
-    hospital_beds = pd.read_csv('../../JoinedTables/BedsToCovidByCounty.csv')
+    hospital_beds = pd.read_csv('../../JoinedTables/BedsToCovidByCounty.csv',
+                                usecols = ['State', 'County', 'ICU Beds', 'Total Population',
+                                           'Population Aged 60+', 'Hospital Beds', 'Confirmed Cases',
+                                           'Deaths',  'Normalized Beds', 'Normalized ICU Beds',
+                                           'Normalized Cases', 'Normalized Deaths', 'Normalized Deaths 60+'])
+    hospital_beds['Deaths'].fillna(0, inplace=True)
+    # hospital_beds['ICU Beds'].fillna(NULL, inplace=True)
+    hospital_beds['Confirmed Cases'].fillna(0, inplace=True)
 
     m = folium.Map(location=[48, -102], zoom_start=3)
 
     folium.Choropleth(
+        nan_fill_color='white',
         geo_data=data,
         name=arg2,
         data=hospital_beds,
         columns=[arg1, arg2],
         key_on='feature.id',
-        fill_color='YlGn',
+        fill_color='GnBu',
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name=arg2
     ).add_to(m)
 
     folium.Choropleth(
+        nan_fill_color='white',
         geo_data=data,
         name=arg3,
         data=hospital_beds,
         columns=[arg1, arg3],
         key_on='feature.id',
-        fill_color='OrRd',
+        fill_color='PuRd',
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name=arg3
