@@ -79,7 +79,7 @@ def FinalGraphState(arg1, arg2, arg3):
         columns=[arg1, arg2],
         # see folium.Choropleth? for details on key_on
         key_on='feature.id',
-        fill_color='GnBu',
+        fill_color='PuRd',
         fill_opacity=0.5,
         line_opacity=0.5,
         legend_name=arg2,
@@ -95,7 +95,7 @@ def FinalGraphState(arg1, arg2, arg3):
         columns=[arg1, arg3],
         # see folium.Choropleth? for details on key_on
         key_on='feature.id',
-        fill_color='PuRd',
+        fill_color='GnBu',
         fill_opacity=0.5,
         line_opacity=0.5,
         legend_name=arg3,
@@ -137,7 +137,7 @@ def FinalGraphCounty(arg1, arg2, arg3):
         data=hospital_beds,
         columns=[arg1, arg2],
         key_on='feature.id',
-        fill_color='GnBu',
+        fill_color='PuRd',
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name=arg2
@@ -150,7 +150,7 @@ def FinalGraphCounty(arg1, arg2, arg3):
         data=hospital_beds,
         columns=[arg1, arg3],
         key_on='feature.id',
-        fill_color='PuRd',
+        fill_color='GnBu',
         fill_opacity=0.7,
         line_opacity=0.2,
         legend_name=arg3

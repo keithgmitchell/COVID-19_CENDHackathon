@@ -7,8 +7,14 @@
 <!-- Datatables stuff -->
 
 
-    <div class="w3-container w3-content w3-padding-32" style="max-width:1000px">
-    <h1 class="w3-wide">Covid-19 Data Integration/Modeling Initiative</h1>
+    <div class="w3-container w3-content w3-padding-32" style="max-width:90%">
+
+    <h1 class="w3-wide">Healthcare Capacity in the COVID-19 Pandemic in the USA</h1>
+        <p align="left">
+            COVID-19 cases are increasing daily in the USA and there is a concern that the number of cases could overwhelm the healthcare system, as it has in other countries. We aim to help visualize healthcare capacity (ICU and hospital beds) in conjunction with COVID-19 cases and deaths.  Use this website to see, in real-time, how the United States healthcare capacity of each county compares to their need as the COVID-10 pandemic progresses.
+            This is designed to be a short term solution to help public health workers, civil servants, and health care workers and administrators based in the USA to track their county’s needs, respond to the pandemic and plan for the numbers of ICU and hospital beds needed.
+
+        </p>
         <form method="post">{% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Submit">
@@ -16,9 +22,9 @@
   </div>
 
   <!-- The Header Bio Section -->
-  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:90%" id="about_me">
+  <div class="w3-container w3-content w3-center w3-padding-10" style="max-width:90%" id="about_me">
 
-    <div style="margin:20;padding:20;border:thin solid black;border-radius:8px" class="row">
+    <div style="border:thin solid black;border-radius:8px" class="row">
         {% if graph1 %}
             <div class="column" style="width:99.9%;height:99">
             {{ graph1|safe }}
@@ -35,7 +41,67 @@
 
     </div>
 
-</div>
+    </div>
+
+<br>
+  <div class="w3-container w3-content w3-gray w3-center w3-padding-20" style="max-width:10000px;background-color:#B3A369" id="about_me">
+
+
+    <!--<p class="w3-opacity"><i>We love music</i></p>-->
+
+    <div class="w3-row w3-padding-64">
+      <div class="w3-third" >
+        <h3>Resources Used:</h3>
+
+          <ul>
+              <p>
+                    <a href="https://khn.org/news/as-coronavirus-spreads-widely-millions-of-older-americans-live-in-counties-with-no-icu-beds/#lookup">
+                                       <button  label="Hackathon" name="so_link" class="btn btn-primary">ICU beds and population and age > 60</button>
+                    </a>
+
+              </p>
+              <p>
+                  <a href="https://hifld-geoplatform.opendata.arcgis.com/datasets/hospitals/data">
+                                        <button  label="Hackathon" name="so_link" class="btn btn-primary">Hospital data and total beds</button>
+                    </a>
+              </p>
+              <p>
+                              <a href="https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/">
+                                        <button  label="Hackathon" name="so_link" class="btn btn-primary">COVID data by county</button>
+            </a>
+              </p>
+          </ul>
+      </div>
+
+
+      <div class="w3-third" >
+        <p>
+            <a href="https://www.cendcoronavirushackathon.com/">
+                                        <button  label="Hackathon" name="so_link" class="btn btn-info">COVID-19 Hackathon</button>
+            </a>
+        </p>
+        <img src="http://cend.globalhealth.berkeley.edu/files/2013/12/Update-CEND-Logo-bw.png" alt="Random Name" style="width:90%">
+<!--        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.facebook.com%2FCENDUCBerkeley%2F&psig=AOvVaw2Xx9pH7lq_KIP7riKgHyY-&ust=1585340573034000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCLDfr4H8uOgCFQAAAAAdAAAAABAD" alt="Random Name" style="width:90%">-->
+      </div>
+
+
+      <div class="w3-third" >
+        <h3>Meet the team:</h3>
+          <ul>
+               <p>Matt Settles, University of California, Davis</p>
+               <p>Chloe Le Marchand, Family Medicine Physician at Kaiser</p>
+               <p>Keith Mitchell, University of California, Davis</p>
+               <p>Jason Lan, University of California Berkeley</p>
+               <p>Adithya Kulkarni, Iowa State University</p>
+          </ul>
+        <p>
+
+        </p>
+      </div>
+
+
+    </div>
+  </div>
 
 
 {% endblock %}
