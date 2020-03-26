@@ -12,6 +12,25 @@ import plotly.graph_objs as go
 import plotly.figure_factory as ff
 import folium
 
+from .forms import *
+from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
+
+import folium
+import branca
+import pandas as pd
+import json
+import requests
+
+
+import branca
+import pandas as pd
+import os
+import json
+import requests
+import folium
+import codecs
+
 # Create your views here.
 def main_page(request):
     html = 'home.html'
@@ -20,7 +39,9 @@ def main_page(request):
     return HttpResponse(template.render(context, request))
 
 
-
+#####################################
+# GRAPHS
+#####################################
 
 def GetGraph():
     """
@@ -33,22 +54,155 @@ def GetGraph():
     div = opy.plot(fig, auto_open=False, output_type='div')
     return div
 
+def FinalGraphState(arg1, arg2, arg3):
+    arg1 = 'State Full Name'
+    # load geo_json
+    with open('../../coronavirus/us-states.geojson') as f:
+        geojson_counties = json.load(f)
 
-def FoliumGraph():
-    coords = [(40.7831, -73.9712), (40.6782, -73.9412), (40.7282, -73.7949)]
-    map = folium.Map(location=[40.7118, -74.0131], zoom_start=12)
-    for coord in coords:
-        folium.Marker(location=[coord[0], coord[1]]).add_to(map)
-    return map._repr_html_()
+    # access features
+    for i in geojson_counties['features']:
+        i['id'] = i['properties']['name']
+
+    # load data associated with geo_json
+    pop_df = pd.read_csv('../../coronavirus/BedsToCovidByState.csv')
+
+    # map
+    map_choropleth = folium.Map(location=[39.77, -86.15], zoom_start=7)
+
+    # choropleth
+    folium.Choropleth(
+        geo_data=geojson_counties,
+        name=arg2,
+        data=pop_df,
+        columns=[arg1, arg2],
+        # see folium.Choropleth? for details on key_on
+        key_on='feature.id',
+        fill_color='PuBu',
+        fill_opacity=0.5,
+        line_opacity=0.5,
+        legend_name=arg2,
+        highlight=True
+    ).add_to(map_choropleth)
+
+
+    folium.Choropleth(
+        geo_data=geojson_counties,
+        name=arg3,
+        data=pop_df,
+        columns=[arg1, arg3],
+        # see folium.Choropleth? for details on key_on
+        key_on='feature.id',
+        fill_color='YlOrRd',
+        fill_opacity=0.5,
+        line_opacity=0.5,
+        legend_name=arg3,
+        highlight=True
+    ).add_to(map_choropleth)
+
+
+    # layer control to turn choropleth on or off
+    folium.LayerControl().add_to(map_choropleth)
+
+    # display map
+    return map_choropleth._repr_html_()
+
+
+
+def FinalGraphCounty(arg1, arg2, arg3):
+    if arg1=='County':
+        with codecs.open('../../coronavirus/gz_2010_us_050_00_20m.json', 'r', encoding='utf-8', errors='ignore') as data_file:
+            data = json.load(data_file)
+        for i in data['features']:
+            i['id'] = i['properties']['NAME']
+
+
+    hospital_beds = pd.read_csv('../../coronavirus/HospitalAndICUBeds.csv')
+
+    m = folium.Map(location=[48, -102], zoom_start=3)
+
+    folium.Choropleth(
+        geo_data=data,
+        name=arg2,
+        data=hospital_beds,
+        columns=[arg1, arg2],
+        key_on='feature.id',
+        fill_color='YlGn',
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name=arg2
+    ).add_to(m)
+
+    folium.Choropleth(
+        geo_data=data,
+        name=arg3,
+        data=hospital_beds,
+        columns=[arg1, arg3],
+        key_on='feature.id',
+        fill_color='OrRd',
+        fill_opacity=0.7,
+        line_opacity=0.2,
+        legend_name=arg3
+    ).add_to(m)
+
+    folium.LayerControl().add_to(m)
+
+    return m._repr_html_()
+
+#####################################
+# VIEWS
+#####################################
 
 
 def generic_view(request):
     context = {}
-    context['graph'] = GetGraph()
-    context['graph2'] = FoliumGraph()
-
+    context['graph'] = FoliumGraphBeds()
+    context['graph2'] = FoliumGraphICUBeds()
     # print(context)
     return render(request, 'generic.html', context)
 
+class VentilatorView(FormView):
+    template_name = 'ventilator.html'
+    form_class = VentilatorForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
 
+def graph_view(request):
+    context = {}
+
+    #context['graph1'] = FinalGraph('County', self.field1, self.field2)  # FinalGraph(self.field1, self.field2)
+    #context['graph2'] = FinalGraph('County', 'Population Aged 60+',
+    #                               'Hospital Beds')  # FinalGraph(self.field1, self.field2)
+    context['form'] = AnalysisType()
+    if request.method == 'POST':
+        form = AnalysisType(request.POST)
+        if form.is_valid():
+            request.session['form_data'] = form.cleaned_data
+            if form.cleaned_data['area'] == 'County':
+                context['graph1'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['Graph_1_Field_1'], form.cleaned_data['Graph_1_Field_2'])  # FinalGraph(self.field1, self.field2)
+                context['graph2'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
+                context['form'] = AnalysisType(initial={'Graph_1_Field_1': form.cleaned_data['Graph_1_Field_1'], 'Graph_1_Field_2': form.cleaned_data['Graph_1_Field_2'],
+                                                    'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
+                                                    'area': form.cleaned_data['area']})
+            elif form.cleaned_data['area'] == 'State':
+                context['graph1'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['Graph_1_Field_1'], form.cleaned_data['Graph_1_Field_2'])  # FinalGraph(self.field1, self.field2)
+                context['graph2'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
+                context['form'] = AnalysisType(initial={'Graph_1_Field_1': form.cleaned_data['Graph_1_Field_1'], 'Graph_1_Field_2': form.cleaned_data['Graph_1_Field_2'],
+                                                    'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
+                                                    'area': form.cleaned_data['area']})
+    return render(request, 'generic.html', context)
+
+class VentilatorList(ListView):
+
+    model = Ventilator
+    template_name = 'ventilator_list.html'
+    # paginate_by = 100  # if pagination is desired
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(context)
+        return context
