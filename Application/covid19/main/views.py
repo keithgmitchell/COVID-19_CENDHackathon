@@ -10,26 +10,27 @@ import plotly.express as px
 import plotly.offline as opy
 import plotly.graph_objs as go
 import plotly.figure_factory as ff
-import folium
-
 from .forms import *
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
-
 import folium
-import branca
-import pandas as pd
 import json
 import requests
-
-
 import branca
 import pandas as pd
 import os
-import json
-import requests
-import folium
 import codecs
+import pandas as pd
+import numpy
+from django.shortcuts import render
+
+
+def test_view(request):
+    context = dict(
+        df=pd.read_csv('../../coronavirus/HospitalAndICUBeds.csv')
+    )
+    return render(request, 'tables.html', context)
+
 
 # Create your views here.
 def main_page(request):
