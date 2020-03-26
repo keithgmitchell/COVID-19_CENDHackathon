@@ -15,8 +15,8 @@ class VentilatorForm(ModelForm):
 
 
 class AnalysisType(forms.Form):
-    Graph_1_Field_1 = forms.ChoiceField(choices=cases_list)
-    Graph_1_Field_2 = forms.ChoiceField(choices=resource_list)
+    variables = forms.ChoiceField(choices=cases_list)
+    resources = forms.ChoiceField(choices=resource_list)
     #Graph_2_Field_1 = forms.ChoiceField(choices=list)
     #Graph_2_Field_2 = forms.ChoiceField(choices=list)
     area = forms.ChoiceField(choices=list_area)

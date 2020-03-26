@@ -188,23 +188,23 @@ def graph_view(request):
     #context['graph1'] = FinalGraph('County', self.field1, self.field2)  # FinalGraph(self.field1, self.field2)
     #context['graph2'] = FinalGraph('County', 'Population Aged 60+',
     #                               'Hospital Beds')  # FinalGraph(self.field1, self.field2)
-    context['graph1'] = FinalGraphState('State', 'ICU Beds', 'Confirmed Cases')  # FinalGraph(self.field1, self.field2)
+    context['graph1'] = FinalGraphState('State', 'Normalized Cases', 'Normalized Beds')  # FinalGraph(self.field1, self.field2)
 
-    context['form'] = AnalysisType(initial={'Graph_1_Field_1': 'ICU Beds', 'Graph_1_Field_2':'Confirmed Cases', 'area':'State'})
+    context['form'] = AnalysisType(initial={'variables': 'Normalized Cases', 'resources':'Normalized Beds', 'area':'State'})
     if request.method == 'POST':
         form = AnalysisType(request.POST)
         if form.is_valid():
             request.session['form_data'] = form.cleaned_data
             if form.cleaned_data['area'] == 'County':
-                context['graph1'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['Graph_1_Field_1'], form.cleaned_data['Graph_1_Field_2'])  # FinalGraph(self.field1, self.field2)
+                context['graph1'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['variables'], form.cleaned_data['resources'])  # FinalGraph(self.field1, self.field2)
                 #context['graph2'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
-                context['form'] = AnalysisType(initial={'Graph_1_Field_1': form.cleaned_data['Graph_1_Field_1'], 'Graph_1_Field_2': form.cleaned_data['Graph_1_Field_2'],
+                context['form'] = AnalysisType(initial={'variables': form.cleaned_data['variables'], 'resources': form.cleaned_data['resources'],
                                                     #'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
                                                     'area': form.cleaned_data['area']})
             elif form.cleaned_data['area'] == 'State':
-                context['graph1'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['Graph_1_Field_1'], form.cleaned_data['Graph_1_Field_2'])  # FinalGraph(self.field1, self.field2)
+                context['graph1'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['variables'], form.cleaned_data['resources'])  # FinalGraph(self.field1, self.field2)
                 #context['graph2'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
-                context['form'] = AnalysisType(initial={'Graph_1_Field_1': form.cleaned_data['Graph_1_Field_1'], 'Graph_1_Field_2': form.cleaned_data['Graph_1_Field_2'],
+                context['form'] = AnalysisType(initial={'variables': form.cleaned_data['variables'], 'resources': form.cleaned_data['resources'],
                                                     #'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
                                                     'area': form.cleaned_data['area']})
     return render(request, 'generic.html', context)
