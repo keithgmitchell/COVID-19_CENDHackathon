@@ -8,7 +8,7 @@
 
 
     <div class="w3-container w3-content w3-padding-32" style="max-width:800px">
-      <h3 class="w3-wide w3-center">County Graphs</h3>
+      <h3 class="w3-wide w3-center">County/State Graphs</h3>
         <form method="post">{% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Submit">
@@ -20,7 +20,7 @@
 
     <div style="margin:20;padding:20;border:thin solid black;border-radius:8px" class="row">
         {% if graph1 %}
-            <div class="column" style="width:99%;height:99">
+            <div class="column" style="width:99.9%;height:99">
             {{ graph1|safe }}
             </div>
         {% endif %}

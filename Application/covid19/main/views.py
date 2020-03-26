@@ -55,7 +55,7 @@ def GetGraph():
     return div
 
 def FinalGraphState(arg1, arg2, arg3):
-    arg1 = 'State Full Name'
+    arg1 = 'State'
     # load geo_json
     with open('../../coronavirus/us-states.geojson') as f:
         geojson_counties = json.load(f)
@@ -65,10 +65,10 @@ def FinalGraphState(arg1, arg2, arg3):
         i['id'] = i['properties']['name']
 
     # load data associated with geo_json
-    pop_df = pd.read_csv('../../coronavirus/BedsToCovidByState.csv')
+    pop_df = pd.read_csv('../../JoinedTables/BedsToCovidByState.csv')
 
     # map
-    map_choropleth = folium.Map(location=[39.77, -86.15], zoom_start=7)
+    map_choropleth = folium.Map(location=[39.77, -86.15], zoom_start=3)
 
     # choropleth
     folium.Choropleth(
@@ -117,7 +117,7 @@ def FinalGraphCounty(arg1, arg2, arg3):
             i['id'] = i['properties']['NAME']
 
 
-    hospital_beds = pd.read_csv('../../coronavirus/HospitalAndICUBeds.csv')
+    hospital_beds = pd.read_csv('../../JoinedTables/BedsToCovidByCounty.csv')
 
     m = folium.Map(location=[48, -102], zoom_start=3)
 
@@ -177,22 +177,24 @@ def graph_view(request):
     #context['graph1'] = FinalGraph('County', self.field1, self.field2)  # FinalGraph(self.field1, self.field2)
     #context['graph2'] = FinalGraph('County', 'Population Aged 60+',
     #                               'Hospital Beds')  # FinalGraph(self.field1, self.field2)
-    context['form'] = AnalysisType()
+    context['graph1'] = FinalGraphState('State', 'ICU Beds', 'Confirmed Cases')  # FinalGraph(self.field1, self.field2)
+
+    context['form'] = AnalysisType(initial={'Graph_1_Field_1': 'ICU Beds', 'Graph_1_Field_2':'Confirmed Cases', 'area':'State'})
     if request.method == 'POST':
         form = AnalysisType(request.POST)
         if form.is_valid():
             request.session['form_data'] = form.cleaned_data
             if form.cleaned_data['area'] == 'County':
                 context['graph1'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['Graph_1_Field_1'], form.cleaned_data['Graph_1_Field_2'])  # FinalGraph(self.field1, self.field2)
-                context['graph2'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
+                #context['graph2'] = FinalGraphCounty(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
                 context['form'] = AnalysisType(initial={'Graph_1_Field_1': form.cleaned_data['Graph_1_Field_1'], 'Graph_1_Field_2': form.cleaned_data['Graph_1_Field_2'],
-                                                    'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
+                                                    #'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
                                                     'area': form.cleaned_data['area']})
             elif form.cleaned_data['area'] == 'State':
                 context['graph1'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['Graph_1_Field_1'], form.cleaned_data['Graph_1_Field_2'])  # FinalGraph(self.field1, self.field2)
-                context['graph2'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
+                #context['graph2'] = FinalGraphState(form.cleaned_data['area'], form.cleaned_data['Graph_2_Field_1'], form.cleaned_data['Graph_2_Field_2'])
                 context['form'] = AnalysisType(initial={'Graph_1_Field_1': form.cleaned_data['Graph_1_Field_1'], 'Graph_1_Field_2': form.cleaned_data['Graph_1_Field_2'],
-                                                    'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
+                                                    #'Graph_2_Field_1': form.cleaned_data['Graph_2_Field_1'], 'Graph_2_Field_2': form.cleaned_data['Graph_2_Field_2'],
                                                     'area': form.cleaned_data['area']})
     return render(request, 'generic.html', context)
 
