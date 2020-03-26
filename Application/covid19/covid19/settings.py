@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'pt#d(cuj2=gcn%e4o^fce-f!uck@2e*vx-_l4!ic^^=756$cj6'
+SECRET_KEY = '=r!thy7q6ln0dfqov@-3ap8ue6u$%m=cz-t$gk1j8h)qmh^@&^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'ec2-13-57-41-176.us-west-1.compute.amazonaws.com:8000' 'ec2-13-57-41-176.us-west-1.compute.amazonaws.com', ]
 
 
 # Application definition
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'main',
+    #'widget_tweaks',
+    #'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -73,10 +76,11 @@ WSGI_APPLICATION = 'covid19.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+DEVELOPMENT = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': 'mydatabase',
     }
 }
 
@@ -118,3 +122,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+#STATIC_ROOT = "/var/www/c/static/"
+

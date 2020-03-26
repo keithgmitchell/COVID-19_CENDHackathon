@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<title>Covid-19 App</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="shortcut icon" type="image/png" href="https://lh3.googleusercontent.com/WbeOywhVCV9r4EoJ5ny4VWjDuDQWMSCRwAZeMb2p-39D3TOAonRHRVZHEZATCeBGT0A9_KRYfs2jFJUyuMtsZu4xoe7hdv9A_ApyPBD127UdraBWozozZ7WobiZu7MgOCzNX_JncvsLHacD47p2tbp3MPJl4m7-AEGhmw9-8KuZWJrAZcoMVmg9sHtecDhwWQD62cWnGbSGqg4BRneVA-LQZ4nROXNyLGA0veDPdTEhCkGaaKVUiXs5Si-QlHKBfxFuBTVX-FSiX1iO_OjcuTOyD9XvHJDm_zziMabe6iSj3IIyH9qftolvoPuZRDrK19CBDc-xc1yrDN-p762gho3vN6HbMIbEKRqTwN4-S1Aymwk0nN9jfGEevDcF4X7ZMZSdVLynq35ie94TDimGAZ4aiUqos0YAMnaBFtGaHZTMbjfYIujb9xKpytTp9p6ioP9Xd0HiUaU1AHVv4fTaDlMyULdYrC6p0M0I0cTjPFaBJZcLRsNlxiq3iddtSbgVHXD1WJjHJseWyvfEhcHQd5q9_-13St_3j7_9_e-RofAjQvLNqQ94eu05MOxzQLj8t5SE98z1VZPTQqIg8NORWmB7AZJPBPMHvcFQ2arIStxBKzDMAtZ0M8IobBCpw-uAXl0PpSUI-Wmd757JV3FqtPwcp63Xfwna-tFjNIxEMCUaIpcbTGji7TNHQ=s16-no">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159126069-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-159126069-1');
+</script>
+
+
+<style>
+body {font-family: "Lato", sans-serif}
+.mySlides {display: none}
+p {
+    word-break: break-all;
+    white-space: normal;
+}
+</style>
+<body>
+
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-card" style="background-color:#002855">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+
+    <div class="w3-dropdown-hover w3-hide-small">
+      <button class="w3-padding-large w3-button" style="color:white" title="More">DATABASE<i class="fa fa-caret-down"></i></button>
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a href="/query/" class="w3-bar-item w3-button" style="background-color:white">QUERY</a>
+        <a href="/query/" class="w3-bar-item w3-button" style="background-color:white">ANALYTICS</a>
+      </div>
+    </div>
+
+<!--    <div class="w3-dropdown-hover w3-hide-small">-->
+<!--      <button class="w3-padding-large w3-button" style="color:white" title="More">PROJECT INFO <i class="fa fa-caret-down"></i></button>-->
+<!--      <div class="w3-dropdown-content w3-bar-block w3-card-4">-->
+<!--        <a href="http://neuromab.ucdavis.edu/" class="w3-bar-item w3-button">NEUROMAB WEBSITE</a>-->
+<!--        <a href="https://github.com/ucdavis-bioinformatics/NeuroMabSeq/tree/website" class="w3-bar-item w3-button">GITHUB</a>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    <a href="/" class="w3-padding-large w3-button w3-right" style="color:white">Covid19 App Home</a>
+
+  </div>
+</div>
+
+<!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="/query/" class="w3-bar-item w3-button w3-padding-large">QUERY</a>
+  <a href="/query/" class="w3-bar-item w3-button w3-padding-large">ANALYTICS</a>
+  <a href="/" class="w3-bar-item w3-button w3-padding-large">NEUROMAB</a>
+  <a href="/" class="w3-bar-item w3-button w3-padding-large">GITHUB</a>
+</div>
+
+{% block content %}
+
+{% endblock %}
+
+<!-- The Contact Section -->
+<div class="w3-gray w3-padding-64"  id="contact">
+  <h3 class="w3-wide w3-center">CONTACT</h3>
+  <!--<p class="w3-opacity w3-center"><i>Fan? Drop a note!</i></p>-->
+  <div class="w3-row w3-padding-32">
+    <div class="w3-col m6 w3-large w3-margin-bottom">
+<!--      <i class="fa fa-map-marker" style="width:30px"></i> Los Angeles, US<br>-->
+      <!--<i class="fa fa-phone" style="width:30px"></i> Phone: (559) 936-5597<br>-->
+<!--      <i class="fa fa-envelope" style="width:30px"> </i> Email: keithgmitchell@g.ucla.edu<br>-->
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-64 w3-center w3-opacity w3-light-grey w3-xlarge">
+<!--  <a class="fa fa-github w3-hover-opacity" href="https://github.com/ucdavis-bioinformatics/NeuroMabSeq/tree/website"></a>-->
+<!--  <a class="fa fa-github w3-hover-opacity" href="https://github.com/ucdavis-bioinformatics/NeuroMabSeq/tree/pipeline"></a>-->
+<!--  <a class="fa fa-bitbucket w3-hover-opacity" href="https://bitbucket.org/keithgmitchell/"></a>-->
+  <!--<p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>-->
+</footer>
+
+<script>
+// Automatic Slideshow - change image every 4 seconds
+var myIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";
+    }
+    myIndex++;
+    if (myIndex > x.length) {myIndex = 1}
+    x[myIndex-1].style.display = "block";
+    setTimeout(carousel, 4000);
+}
+
+// Used to toggle the menu on small screens when clicking on the menu button
+function myFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+// When the user clicks anywhere outside of the modal, close it
+var modal = document.getElementById('ticketModal');
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>
