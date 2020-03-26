@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+  <div class="w3-white" id="experience">
+    <div class="w3-container w3-content w3-padding-32" style="max-width:800px">
+      <h3 class="w3-wide w3-center">PROJECT INFORMATION</h3>
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+  </div>
+
+{% endblock %}

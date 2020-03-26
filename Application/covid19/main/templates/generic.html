@@ -5,65 +5,34 @@
 {% block content %}
 
 <!-- Datatables stuff -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.17/css/jquery.dataTables.css">
-<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.17/js/jquery.dataTables.js"></script>
-
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/responsive/1.0.7/js/dataTables.responsive.min.js"></script>
 
 
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/1.0.7/css/responsive.dataTables.min.css">
-
-<style>
-
-
-table {
-  border-collapse: collapse;
-}
-
-table, th, td {
-  border: 1px solid black;
-}
-
-</style>
-
-<script>
-
-
-$(document).ready(function(){ $('#myTable').DataTable(); });
-
-$(document).ready( function () {
-  var table = $('#example').DataTable({
-  });
-} );
-$(document).ready(function() {
-    $('#example2').DataTable({"pageLength": 50, searching: false, paging: false, info: false, ordering: false, wrap: true});
-} );
-$(document).ready(function() {
-    $('#example1').DataTable({"pageLength": 50, searching: false, paging: false, info: false, ordering: false, wrap: true});
-} );
-
-</script>
+    <div class="w3-container w3-content w3-padding-32" style="max-width:800px">
+      <h3 class="w3-wide w3-center">County/State Graphs</h3>
+        <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+  </div>
 
   <!-- The Header Bio Section -->
-  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="about_me">
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:90%" id="about_me">
 
-    <div class="row">
-        {% if graph %}
-            <div class="column" style="width:100%;height:100%">
-            {{ graph|safe }}
+    <div style="margin:20;padding:20;border:thin solid black;border-radius:8px" class="row">
+        {% if graph1 %}
+            <div class="column" style="width:99.9%;height:99">
+            {{ graph1|safe }}
+            </div>
+        {% endif %}
+        {% if graph2 %}
+            <div class="column" style="width:99%;height:99%">
+            {{ graph2|safe }}
             </div>
         {% endif %}
     </div>
 
      <div class="row">
-        {% if graph %}
-            <div class="column" style="width:100%;height:100%">
-            {{ graph2|safe }}
-            </div>
-        {% endif %}
+
     </div>
 
 </div>
